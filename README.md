@@ -1,10 +1,66 @@
 # Price List Sync: Week 7 client project
 
-**Status: Day 2 done. Core built, tested, and verified on real AI output: 317/317 prices correct (100%), 0 wrong prices, $0.0078.** See [PROGRESS.md](PROGRESS.md).
+**Status: Day 3 done. Complete and tested: 65 tests, every user path in [TEST_PATHS.md](TEST_PATHS.md).**
 
-AI Masterclass 2, Week 7 (Client Project). The client is simulated: Mlimani Hardware & Building Supplies is a fictional Kericho hardware shop, used across my earlier projects.
+Every Monday at 7:00 am, Price List Sync reads a hardware shop's supplier price lists (PDF and Excel). It checks every price against the original document, matches each item to the shop's own price sheet, and emails the owner and managers what to reprice, with the suggested selling price at the shop's markup. A person approves every change.
+
+AI Masterclass 2, Week 7 (Client Project). The client is simulated: Mlimani Hardware & Building Supplies is a fictional Kericho shop.
 - **Day 1:** scoping (brief, estimate, sign-off).
-- **Day 2:** the core feature.
+- **Day 2:** the core, verified on real AI output at 317/317 prices correct.
+- **Day 3:** completing and testing.
+
+**For the client:** [READ ME FIRST.txt](READ%20ME%20FIRST.txt), with numbered steps and no jargon.
+
+## Run it (developer)
+
+```bash
+pip install -r requirements.txt
+pytest -q                                   # 65 tests, no API key or email needed
+cp config.env.example config.env            # add ANTHROPIC_API_KEY, Gmail App Password, REPORT_TO
+python sync.py --check                      # settings check
+python sync.py --no-email                   # makes reports/: price_updates, to_check, changes, email preview
+python sync.py --test                       # emails TEST_EMAIL_TO only, subject [TEST]
+python sync.py                              # the real thing (what the Monday schedule runs)
+python sync.py --install-schedule           # Monday 07:00, Windows Task Scheduler
+```
+
+## Day 3: the complete tool
+
+```
+price_lists/<supplier>/<date>.pdf|.xlsx        shop/Mlimani price sheet.xlsx        config.env
+        |                                              |                                |
+   pricesync.py  read + check every price        shop.py  match each stocked item      sync.py  settings check,
+   (Day 2 core, 317/317)                         to this week's supplier price,        weekly job, log, schedule
+        |                                        price it at the category markup             |
+        +------------------------------------------+------------------------------------------+
+                                                   |
+                                     deliver.py  price_updates.xlsx + to_check.xlsx
+                                     + email: HTML with a plain-text version, to any number of addresses
+```
+
+**On the sample week:** 14 of the shop's 48 items changed cost, **13 now sell below target markup**, and 3 need checking:
+- one dropped by the supplier;
+- one code typo in the shop's sheet (`HWR-11O`, letter O for zero), with the fix suggested;
+- one worded differently from the supplier's list.
+
+The top item: **5000L tank, cost 41,500 to 43,900, sells at 51,880, suggested 54,880.**
+
+| Day 3 file | What it is |
+|---|---|
+| `sync.py` | The program the client runs: settings check, weekly job, log, schedule, test mode |
+| `shop.py` | Reads the price sheet, matches items, prices them, suggests fixes |
+| `deliver.py` | The two spreadsheets and the email (HTML + plain text) |
+| `config.env.example` | Every setting, with plain notes on each line |
+| `setup.bat`, `run.bat`, `send test email.bat`, `remove_schedule.bat` | Double-click files |
+| `READ ME FIRST.txt` | Client guide |
+| `TEST_PATHS.md` | Every user path and its result |
+| `OBSERVER_NOTES.md` | Template for watching someone use it without help |
+| `BACKLOG.md` | What I'd fix with one more day |
+| `HANDOVER_QA.md` | 5 likely client questions, answered |
+| `DELIVERY_CHECKLIST.md`, `INVOICE.md`, `WALKTHROUGH_SCRIPT.md` | For Friday |
+| `tests/test_week.py` | 35 tests: matching, pricing, email, and every user path |
+
+---
 
 ## Day 2: the core
 
@@ -34,7 +90,7 @@ python pricesync.py                         # all 3 suppliers: the changes repor
 
 ### First real run: a bug found and fixed
 
-`evaluate.py` scored Kapsoit (the supplier with no product codes) at 80%: the prices were right, but 6 products were worded differently by the AI. In the weekly comparison that would have shown products as both "new" and "no longer listed". Products without codes are now recognised by **the text printed before the price in the PDF**, which is stable every week, not by the AI's wording. Details are in [PROGRESS.md](PROGRESS.md).
+`evaluate.py` scored Kapsoit (the supplier with no product codes) at 80%: the prices were right, but 6 products were worded differently by the AI. In the weekly comparison that would have shown products as both "new" and "no longer listed". Products without codes are now recognised by **the text printed before the price in the PDF**, which is stable every week, not by the AI's wording. **Re-run: 317/317 correct (100%).** Details are in [PROGRESS.md](PROGRESS.md).
 
 ### Client data (simulated)
 

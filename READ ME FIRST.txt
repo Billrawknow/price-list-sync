@@ -1,0 +1,95 @@
+PRICE LIST SYNC - READ ME FIRST
+===============================
+
+Every Monday at 7:00 am this tool reads your suppliers' price lists,
+checks every price against the original document, compares them with
+your price sheet, and emails you:
+
+  - which of your items now cost more (or less),
+  - which items now SELL BELOW YOUR MARKUP, with the price to charge,
+  - two spreadsheets: "price_updates" and "to_check".
+
+It never changes your price sheet by itself. You decide.
+
+
+SETTING IT UP (once, about 15 minutes)
+--------------------------------------
+
+1. Put the Price List Sync folder in Documents.
+
+2. Double-click  setup.bat
+   Notepad opens your settings. Fill in:
+     - REPORT_TO       : who gets the email (separate with commas)
+     - GMAIL_ADDRESS   : the Gmail account that sends it
+     - GMAIL_APP_PASSWORD : the 16-letter App Password for that account
+   Save (Ctrl+S) and close Notepad. If anything is wrong, setup says
+   which line to fix and opens Notepad again.
+
+3. Double-click  send test email.bat
+   A copy marked [TEST] goes only to the TEST_EMAIL_TO address.
+   Check it arrived.
+
+That's it. It now runs by itself every Monday at 7:00 am.
+
+
+EVERY WEEK
+----------
+
+1. When a supplier sends a price list, save it in their folder inside
+   "price_lists", named with the date on the list, for example:
+       price_lists\kapsoit-plumbing\2026-11-30.pdf
+   (PDF or Excel. Photos or scans can't be read.)
+
+2. On Monday morning, read the email. Start with "Reprice these first".
+
+3. Open the attached "price_updates" file and update your price sheet:
+   new cost, and the suggested selling price where you agree.
+
+4. Open "to_check" and fix what it lists, usually a product whose
+   supplier code in your price sheet is wrong or that the supplier
+   stopped selling. It suggests the likely fix.
+
+
+WHAT THE EMAIL MEANS
+--------------------
+
+Below target markup : at today's selling price you earn less than your
+                      markup for that category. "Suggested" is the price
+                      that gives your full markup, rounded up to KES 10.
+Costs down          : the supplier lowered the price. Keep the extra
+                      margin or pass it on: your choice.
+To check            : items the tool could not match. It never guesses.
+
+
+IF SOMETHING GOES WRONG
+-----------------------
+
+"Please fix these in config.env"
+    Right-click config.env > Open with > Notepad. Fix the lines listed,
+    save, then double-click run.bat.
+
+"looks like a typo. Did you mean @gmail.com?"
+    An email address in REPORT_TO is mistyped. Correct it in config.env.
+
+"Email login failed"
+    GMAIL_APP_PASSWORD must be the 16-letter App Password, not your
+    normal Gmail password.
+
+"No internet?"
+    The report and spreadsheets are still saved in the "reports" folder.
+    When you're back online, double-click run.bat to send the email.
+
+"No new list for 14 days: ask (supplier) for this week's prices"
+    That supplier hasn't sent a list. Ask them, save it, run run.bat.
+
+"Something unexpected went wrong"
+    Nothing was changed. Send the file logs\sync.log to support.
+
+To run it any time:          double-click run.bat
+To stop the Monday run:      double-click remove_schedule.bat
+To start it again:           double-click setup.bat
+
+
+SUPPORT
+-------
+Rawknow Company Ltd  |  Bildad Ronoh  |  bildadronoh@gmail.com

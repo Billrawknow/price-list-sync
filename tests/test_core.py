@@ -289,3 +289,4 @@ def test_lists_saved_in_the_old_format_are_read_again(workspace):
 def test_labels_show_the_unit_once_and_cut_at_a_word(row, width, text):
     # Real run, 26 Nov: "PPR pipe 20mm x 4m length (length)" and "...bulk 10+ sheet (shee"
     assert ps.label(ps.Row(*row), width) == text
+

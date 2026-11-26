@@ -191,6 +191,63 @@ def sunrise_xlsx(week, rows, out):
     book.save(out)
 
 
+# ------------------------------------------------------------------ the shop's own price sheet
+
+MARKUPS = {"Cement": 12, "Steel": 15, "Roofing": 18, "Timber": 20, "Hardware": 30, "Plumbing": 25, "Paint": 25}
+CATEGORY = {"CEM": "Cement", "STL": "Steel", "ROF": "Roofing", "TIM": "Timber", "HWR": "Hardware"}
+# (shop product name, supplier display name, supplier item as written in the shop's sheet, category)
+SHOP_ITEMS = (
+    [(name, "Rift Valley Building Supplies", code, CATEGORY[code[:3]]) for code, name in [
+        ("CEM-002", "Cement 42.5N 50kg"), ("CEM-005", "Cement 32.5R 50kg"), ("CEM-008", "White cement 25kg"),
+        ("CEM-011", "Tile adhesive 20kg"), ("STL-017", "Y8 bar 12m"), ("STL-020", "Y10 bar 12m"),
+        ("STL-023", "Y12 bar 12m"), ("STL-026", "Y16 bar 12m"), ("STL-029", "Y20 bar 12m"),
+        ("STL-035", "BRC mesh A142"), ("STL-041", "Binding wire 25kg"), ("ROF-047", "Box profile G30 3m"),
+        ("ROF-050", "Box profile G28 3m"), ("ROF-053", "Corrugated G30 3m"), ("ROF-059", "Ridge G30 2m"),
+        ("ROF-062", "Roofing nails 1kg"), ("TIM-068", "Cypress 2x4 per ft"), ("TIM-074", "Plywood 18mm"),
+        ("TIM-080", "Marine board 18mm"), ("HWR-086", "Wire nails 3in 1kg"), ("HWR-092", "Hinges 4in pair"),
+        ("HWR-098", "Door lock 3-lever"), ("HWR-101", "Door lock 4-lever"), ("HWR-107", "Chain-link 1.2m x 20m"),
+        ("HWR-11O", "Barbed wire 25kg")]]                       # HWR-11O: letter O typed for zero
+    + [(name, "Kapsoit Plumbing", item, "Plumbing") for item, name in [
+        ("PPR pipe 20mm x 4m", "PPR pipe 20mm"), ("PPR pipe 25mm x 4m", "PPR pipe 25mm"),
+        ("PPR elbow 20mm", "PPR elbow 20mm"), ("PPR tee 20mm", "PPR tee 20mm"),
+        ("PVC pipe 4 inch x 6m (class B)", "PVC pipe 4in class B"), ("PVC pipe 2 inch x 6m", "PVC pipe 2in"),
+        ("Gate valve 1/2 inch brass", "Gate valve 1/2in"), ("Gate valve 1 inch brass", "Gate valve 1in"),
+        ("Pillar tap chrome", "Pillar tap chrome"), ("Float valve 1/2 inch", "Float valve 1/2in"),
+        ("Water tank 1000L", "Tank 1000L"), ("Water tank 5000L", "Tank 5000L"),
+        ("Toilet set close-coupled white", "Toilet set white"), ("Teflon tape", "Teflon tape"),
+        ("Kitchen sink single bowl stainless", "Kitchen sink single bowl")]]   # supplier doesn't say "stainless"
+    + [(name, "Sunrise Paints & Hardware", code, "Paint") for code, name in [
+        ("SP-101", "Emulsion white 20L"), ("SP-102", "Emulsion white 4L"), ("SP-110", "Gloss white 4L"),
+        ("SP-120", "Varnish clear 4L"), ("SP-130", "Thinner 5L"), ("SH-202", "Brush 4in"),
+        ("SH-210", "Roller set 9in"), ("SH-220", "Masking tape 2in")]]
+)
+BELOW_ALREADY = {"Door lock 4-lever": 2350, "Teflon tape": 35}   # priced too low before any change
+
+
+def build_shop_sheet():
+    import math
+    week1 = {}
+    for supplier in ("rift-valley-building-supplies", "kapsoit-plumbing", "sunrise-paints-hardware"):
+        with open(TRUTH / supplier / f"{WEEK1}.csv", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                week1[r["code"] or r["description"]] = float(r["price"])
+    near = {"HWR-11O": "HWR-110", "Kitchen sink single bowl stainless": "Kitchen sink single bowl"}
+    book = Workbook()
+    ws = book.active
+    ws.title = "Price sheet"
+    ws.append(["Shop Code", "Product", "Category", "Supplier", "Supplier Item", "Cost", "Selling Price"])
+    for n, (name, supplier, item, category) in enumerate(SHOP_ITEMS, start=1):
+        cost = week1[near.get(item, item)]
+        selling = BELOW_ALREADY.get(name) or math.ceil(cost * (1 + MARKUPS[category] / 100) / 10) * 10
+        ws.append([f"MH-{n:03d}", name, category, supplier, item, cost, selling])
+    for col, width in zip("ABCDEFG", (10, 26, 11, 30, 34, 10, 13)):
+        ws.column_dimensions[col].width = width
+    (HERE / "shop").mkdir(exist_ok=True)
+    out = HERE / "shop" / "Mlimani price sheet.xlsx"
+    book.save(out)
+    print(f"shop price sheet                 {len(SHOP_ITEMS)} items")
+
+
 # ------------------------------------------------------------------ write everything
 
 def write_truth(supplier, week, rows):
@@ -213,6 +270,7 @@ def main():
             build(week, rows, LISTS / supplier / f"{week}{ext}")
             write_truth(supplier, week, rows)
             print(f"{supplier:<32} {week}  {len(rows):>4} rows")
+    build_shop_sheet()
 
 
 if __name__ == "__main__":
