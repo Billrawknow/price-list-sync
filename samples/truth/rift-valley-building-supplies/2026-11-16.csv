@@ -1,0 +1,112 @@
+code,description,unit,price
+CEM-001,Cement 42.5N,50kg bag,780
+CEM-002,Cement 42.5N - bulk 10+,50kg bag,755
+CEM-003,Cement 42.5N - bulk 50+,50kg bag,735
+CEM-004,Cement 32.5R,50kg bag,720
+CEM-005,Cement 32.5R - bulk 10+,50kg bag,700
+CEM-006,Cement 32.5R - bulk 50+,50kg bag,675
+CEM-007,White cement,25kg bag,1650
+CEM-008,White cement - bulk 10+,25kg bag,1600
+CEM-009,White cement - bulk 50+,25kg bag,1550
+CEM-010,Tile adhesive,20kg bag,980
+CEM-011,Tile adhesive - bulk 10+,20kg bag,950
+CEM-012,Tile adhesive - bulk 50+,20kg bag,920
+CEM-013,Ready mix mortar,40kg bag,690
+CEM-014,Ready mix mortar - bulk 10+,40kg bag,670
+CEM-015,Ready mix mortar - bulk 50+,40kg bag,650
+STL-016,Y8 deformed bar 12m,length,520
+STL-017,Y8 deformed bar 12m - bulk 10+,length,505
+STL-018,Y8 deformed bar 12m - bulk 50+,length,490
+STL-019,Y10 deformed bar 12m,length,790
+STL-020,Y10 deformed bar 12m - bulk 10+,length,765
+STL-021,Y10 deformed bar 12m - bulk 50+,length,745
+STL-022,Y12 deformed bar 12m,length,1130
+STL-023,Y12 deformed bar 12m - bulk 10+,length,1095
+STL-024,Y12 deformed bar 12m - bulk 50+,length,1060
+STL-025,Y16 deformed bar 12m,length,2010
+STL-026,Y16 deformed bar 12m - bulk 10+,length,1950
+STL-027,Y16 deformed bar 12m - bulk 50+,length,1890
+STL-028,Y20 deformed bar 12m,length,3150
+STL-029,Y20 deformed bar 12m - bulk 10+,length,3055
+STL-030,Y20 deformed bar 12m - bulk 50+,length,2960
+STL-031,R6 round bar 12m,length,310
+STL-032,R6 round bar 12m - bulk 10+,length,300
+STL-033,R6 round bar 12m - bulk 50+,length,290
+STL-034,BRC mesh A142 2.4x4.8m,sheet,4850
+STL-035,BRC mesh A142 2.4x4.8m - bulk 10+,sheet,4705
+STL-036,BRC mesh A142 2.4x4.8m - bulk 50+,sheet,4560
+STL-037,BRC mesh A98 2.4x4.8m,sheet,3600
+STL-038,BRC mesh A98 2.4x4.8m - bulk 10+,sheet,3490
+STL-039,BRC mesh A98 2.4x4.8m - bulk 50+,sheet,3385
+STL-040,Binding wire,25kg roll,4300
+STL-041,Binding wire - bulk 10+,25kg roll,4170
+STL-042,Binding wire - bulk 50+,25kg roll,4040
+STL-043,Hollow section 2x2 inch 6m,length,2650
+STL-044,Hollow section 2x2 inch 6m - bulk 10+,length,2570
+STL-045,Hollow section 2x2 inch 6m - bulk 50+,length,2490
+ROF-046,Box profile sheet G30 3m,sheet,1120
+ROF-047,Box profile sheet G30 3m - bulk 10+,sheet,1085
+ROF-048,Box profile sheet G30 3m - bulk 50+,sheet,1055
+ROF-049,Box profile sheet G28 3m,sheet,1380
+ROF-050,Box profile sheet G28 3m - bulk 10+,sheet,1340
+ROF-051,Box profile sheet G28 3m - bulk 50+,sheet,1295
+ROF-052,Corrugated sheet G30 3m,sheet,980
+ROF-053,Corrugated sheet G30 3m - bulk 10+,sheet,950
+ROF-054,Corrugated sheet G30 3m - bulk 50+,sheet,920
+ROF-055,Corrugated sheet G32 2m,sheet,590
+ROF-056,Corrugated sheet G32 2m - bulk 10+,sheet,570
+ROF-057,Corrugated sheet G32 2m - bulk 50+,sheet,555
+ROF-058,Roofing ridge G30 2m,piece,650
+ROF-059,Roofing ridge G30 2m - bulk 10+,piece,630
+ROF-060,Roofing ridge G30 2m - bulk 50+,piece,610
+ROF-061,Roofing nails,1kg,280
+ROF-062,Roofing nails - bulk 10+,1kg,270
+ROF-063,Roofing nails - bulk 50+,1kg,265
+ROF-064,Valley gutter 2m,piece,760
+ROF-065,Valley gutter 2m - bulk 10+,piece,735
+ROF-066,Valley gutter 2m - bulk 50+,piece,715
+TIM-067,Timber cypress 2x4,per ft,85
+TIM-068,Timber cypress 2x4 - bulk 10+,per ft,80
+TIM-069,Timber cypress 2x4 - bulk 50+,per ft,80
+TIM-070,Timber cypress 2x3,per ft,60
+TIM-071,Timber cypress 2x3 - bulk 10+,per ft,60
+TIM-072,Timber cypress 2x3 - bulk 50+,per ft,60
+TIM-073,Plywood 18mm 8x4,sheet,4700
+TIM-074,Plywood 18mm 8x4 - bulk 10+,sheet,4560
+TIM-075,Plywood 18mm 8x4 - bulk 50+,sheet,4420
+TIM-076,Blockboard 18mm 8x4,sheet,5200
+TIM-077,Blockboard 18mm 8x4 - bulk 10+,sheet,5045
+TIM-078,Blockboard 18mm 8x4 - bulk 50+,sheet,4890
+TIM-079,Marine board 18mm 8x4,sheet,6900
+TIM-080,Marine board 18mm 8x4 - bulk 10+,sheet,6695
+TIM-081,Marine board 18mm 8x4 - bulk 50+,sheet,6485
+TIM-082,Fascia board 1x8,per ft,95
+TIM-083,Fascia board 1x8 - bulk 10+,per ft,90
+TIM-084,Fascia board 1x8 - bulk 50+,per ft,90
+HWR-085,Wire nails 3 inch,1kg,210
+HWR-086,Wire nails 3 inch - bulk 10+,1kg,205
+HWR-087,Wire nails 3 inch - bulk 50+,1kg,195
+HWR-088,Wire nails 4 inch,1kg,210
+HWR-089,Wire nails 4 inch - bulk 10+,1kg,205
+HWR-090,Wire nails 4 inch - bulk 50+,1kg,195
+HWR-091,Hinges 4 inch,pair,240
+HWR-092,Hinges 4 inch - bulk 10+,pair,235
+HWR-093,Hinges 4 inch - bulk 50+,pair,225
+HWR-094,Padlock 50mm,piece,650
+HWR-095,Padlock 50mm - bulk 10+,piece,630
+HWR-096,Padlock 50mm - bulk 50+,piece,610
+HWR-097,Door lock 3-lever,piece,1450
+HWR-098,Door lock 3-lever - bulk 10+,piece,1405
+HWR-099,Door lock 3-lever - bulk 50+,piece,1365
+HWR-100,Door lock 4-lever,piece,1950
+HWR-101,Door lock 4-lever - bulk 10+,piece,1890
+HWR-102,Door lock 4-lever - bulk 50+,piece,1835
+HWR-103,Barrel bolt 6 inch,piece,180
+HWR-104,Barrel bolt 6 inch - bulk 10+,piece,175
+HWR-105,Barrel bolt 6 inch - bulk 50+,piece,170
+HWR-106,Chain-link fence 1.2m x 20m,roll,4650
+HWR-107,Chain-link fence 1.2m x 20m - bulk 10+,roll,4510
+HWR-108,Chain-link fence 1.2m x 20m - bulk 50+,roll,4370
+HWR-109,Barbed wire,25kg roll,4950
+HWR-110,Barbed wire - bulk 10+,25kg roll,4800
+HWR-111,Barbed wire - bulk 50+,25kg roll,4655
