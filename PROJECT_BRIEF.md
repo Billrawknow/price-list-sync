@@ -65,7 +65,7 @@ Every Monday at 7:00 am, without anyone touching it:
 | 1 | Price List Sync tool, installed and scheduled on the shop computer | Windows folder: program, `run.bat`, `setup.bat` |
 | 2 | Settings file with emails, markups by category, folder and time | `config.env`, editable in Notepad |
 | 3 | Product-matching table (supplier item to shop item), built with the clerk | `product_map.xlsx` |
-| 4 | 1-page user guide: the Monday routine, and what to do when something is flagged | `READ ME FIRST.txt` and PDF |
+| 4 | 1-page user guide: the Monday routine, and what to do when something is flagged | `README.md` (opens in Notepad) |
 | 5 | 30-minute handover session with the owner and the clerk | In person or video call |
 | 6 | Source code with tests | Private GitHub repository, shared with the client |
 

@@ -54,7 +54,7 @@ def write_updates(results, out):
     ws.title = "Price updates"
     rows = []
     for p in results:
-        if p.status in ("ok", "not_found"):
+        if p.status in ("ok", "not_found", "no_list"):
             continue
         # Cost down: never suggest cutting the price. Keep it, and say what the lowest fair price would be.
         suggested = p.item.selling if p.status == "cost_down" else p.target

@@ -158,6 +158,12 @@ def run_week(today=None, send_email=True, test=False, client=None, smtp=None):
     markups, default = shop.parse_markups(setting("MARKUPS"), setting("DEFAULT_MARKUP", "20"))
     results = shop.price_items(items, latest, markups, default, int(setting("ROUND_TO", "10")), previous)
     summary = shop.summary(results)
+    unlisted = {}
+    for p in results:
+        if p.status == "no_list":
+            unlisted[p.item.supplier] = unlisted.get(p.item.supplier, 0) + 1
+    notes += [f"{name}: NO PRICE LIST in the folder, so its {n} item(s) weren't checked this week. "
+              f"Save their list in price_lists and double-click run.bat." for name, n in sorted(unlisted.items())]
 
     REPORTS.mkdir(exist_ok=True)
     stamp = today.isoformat()

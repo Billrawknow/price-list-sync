@@ -1,6 +1,6 @@
 # Observer notes: someone uses it without my help
 
-**The task I give them, and nothing else:** "This is the folder Mlimani Hardware will get. Using only `READ ME FIRST.txt`, set it up and send yourself the test email. Then tell me which item they should reprice first, and what to charge."
+**The task I give them, and nothing else:** "This is the folder Mlimani Hardware will get. Using only the README.md in the folder, set it up and send yourself the test email. Then tell me which item they should reprice first, and what to charge."
 
 **Rules:** I sit back and watch. I don't explain or point. I note every pause.
 

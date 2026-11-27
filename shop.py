@@ -47,7 +47,7 @@ class Priced:
     new_cost: float = 0.0
     markup: float = 0.0           # target markup on cost, e.g. 0.12
     target: float = 0.0           # selling price that gives the target markup on the NEW cost
-    status: str = ""              # below_target | cost_up | cost_down | ok | not_found
+    status: str = ""              # below_target | cost_up | cost_down | ok | not_found | no_list
     suggestion: str = ""          # for not_found: the closest supplier item
 
     @property
@@ -191,23 +191,27 @@ def price_items(items, price_lists, markups, default_markup, round_to=10, previo
         slug = supplier_folder(item.supplier, price_lists)
         markup = markups.get(ps.norm(item.category), default_markup)
         row = find_supplier_row(item, price_lists[slug]) if slug else None
-        if row is None:
-            hint = suggest(item, price_lists[slug], previous.get(slug)) if slug else ""
+        if slug is None:
+            # No list from this supplier at all: one note in the email, not a line per item in to_check.
             results.append(Priced(item, None, item.cost, markup, round_up(item.cost * (1 + markup), round_to),
-                                  "not_found", hint if slug else f"no price list from '{item.supplier}'"))
+                                  "no_list"))
+            continue
+        if row is None:
+            results.append(Priced(item, None, item.cost, markup, round_up(item.cost * (1 + markup), round_to),
+                                  "not_found", suggest(item, price_lists[slug], previous.get(slug))))
             continue
         target = round_up(row.price * (1 + markup), round_to)
         status = ("below_target" if item.selling < target else
                   "cost_up" if row.price > item.cost else
                   "cost_down" if row.price < item.cost else "ok")
         results.append(Priced(item, row, row.price, markup, target, status))
-    order = {"below_target": 0, "cost_up": 1, "cost_down": 2, "not_found": 3, "ok": 4}
+    order = {"below_target": 0, "cost_up": 1, "cost_down": 2, "not_found": 3, "ok": 4, "no_list": 5}
     results.sort(key=lambda p: (order[p.status], -p.shortfall, -abs(p.change_pct)))
     return results
 
 
 def summary(results):
     count = {s: sum(1 for p in results if p.status == s) for s in
-             ("below_target", "cost_up", "cost_down", "not_found", "ok")}
+             ("below_target", "cost_up", "cost_down", "not_found", "ok", "no_list")}
     count["changed"] = sum(1 for p in results if p.supplier_row and p.new_cost != p.item.cost)
     return count

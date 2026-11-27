@@ -1,10 +1,13 @@
-# Walkthrough video script (3 to 5 minutes, Loom or Win+G)
+# Walkthrough video: under 3 minutes
 
-Speak to Grace, not to a developer.
+Record with Loom or the Windows recorder (Win+G). Show the screen only, no face needed. Speak to Grace, not to a developer. Save it as `docs/walkthrough.mp4` and run `build_delivery.py` again, so it goes into the package.
 
-1. **(20 s)** "Every Monday at 7 this checks your suppliers' prices and tells you what to reprice. Here's what you'll see."
-2. **(60 s)** Open the email on a phone. "These 13 items now sell below your markup. The 5000-litre tank cost went up 2,400. You sell at 51,880; for your 25% markup charge 54,880."
-3. **(40 s)** Open price_updates.xlsx: "New cost and suggested price for each item: copy these into your price sheet." Then open to_check.xlsx: "Marine board: Rift Valley stopped selling it. Barbed wire: a typo in your sheet, HWR-11O should be HWR-110."
-4. **(40 s)** "When a supplier sends a list, save it here, named with the date." Show `price_lists\kapsoit-plumbing\2026-11-30.pdf`.
-5. **(30 s)** Show config.env: "Add a manager's email here. Change markups here."
-6. **(30 s)** "If anything goes wrong, the message tells you what to do. Run it any time with run.bat. Nothing is ever changed in your price sheet without you."
+| Time | Show | Say |
+|---|---|---|
+| 0:00–0:15 | The Monday email in Gmail | "Every Monday at 7 this email tells you which items to reprice. Here's how to read it." |
+| 0:15–0:55 | "Reprice these first" on a phone | "These items now sell below your markup. The 5000-litre tank cost went up 2,400. You sell at 51,880; for your 25% you need 54,880. Same idea for the rest." |
+| 0:55–1:25 | price_updates.xlsx | "Every changed item, with the new cost and the suggested price. Copy what you agree with into your price sheet. Where a cost went down, it keeps your price; the note says how low you could go." |
+| 1:25–1:50 | to_check.xlsx | "Things to fix: barbed wire has a typo in your sheet, HWR-11O should be HWR-110. Rift Valley stopped selling marine board." |
+| 1:50–2:15 | The price_lists folder | "When a supplier sends a list, save it in their folder, named with the date, like this." |
+| 2:15–2:45 | logs\sync.log, then run.bat | "If it ever stops: open sync.log. The last line says what's wrong and what to do. Fix it, then double-click run.bat. Still stuck? WhatsApp me a photo." |
+| 2:45–2:55 | (back to the email) | "That's it. Nothing changes in your price sheet unless you do it." |

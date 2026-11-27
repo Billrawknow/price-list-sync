@@ -1,6 +1,6 @@
 # Price List Sync: Week 7 client project
 
-**Status: Day 3 done. Complete and tested: 65 tests, every user path in [TEST_PATHS.md](TEST_PATHS.md).**
+**Status: Day 4 done. Delivery package built and tested: 78 tests. The delivered folder runs on its own.**
 
 Every Monday at 7:00 am, Price List Sync reads a hardware shop's supplier price lists (PDF and Excel). It checks every price against the original document, matches each item to the shop's own price sheet, and emails the owner and managers what to reprice, with the suggested selling price at the shop's markup. A person approves every change.
 
@@ -8,14 +8,54 @@ AI Masterclass 2, Week 7 (Client Project). The client is simulated: Mlimani Hard
 - **Day 1:** scoping (brief, estimate, sign-off).
 - **Day 2:** the core, verified on real AI output at 317/317 prices correct.
 - **Day 3:** completing and testing.
+- **Day 4:** documentation and the delivery package.
 
-**For the client:** [READ ME FIRST.txt](READ%20ME%20FIRST.txt), with numbered steps and no jargon.
+**For the client:** [client/README.md](client/README.md), with numbered steps, double-clicks only, and the 5 handover questions answered.
+
+## Day 4: the delivery package
+
+```bash
+python build_delivery.py --whatsapp "07.. ... ..." --kra-pin P05........ --payment "M-Pesa ... | Bank ..."
+python build_delivery.py --draft            # placeholders allowed, everything marked DRAFT
+```
+
+```
+delivery/
+  Price List Sync/              what the client copies to Documents
+    sync.py, pricesync.py, shop.py, deliver.py
+    setup.bat, run.bat, send test email.bat, remove_schedule.bat
+    config.env.example          they fill in their own copy in setup
+    README.md                   client guide (Notepad-friendly)
+    requirements.txt            4 packages only (no test tools)
+    price_lists/  shop/         their supplier lists and price sheet
+    logs/  reports/             empty: filled when it runs
+  walkthrough.mp4               under 3 minutes (docs/walkthrough.mp4, once recorded)
+  invoice.pdf                   balance KES 12,500
+  Price List Sync - delivery.zip
+```
+
+**Guards built into the build:**
+- **No secrets ever ship.** `config.env`, `.env` and `delivery.env` anywhere in the package make the build refuse.
+- **No developer files ship:** tests, sample truth files, the evaluator and caches stay out.
+- **Placeholders block a final build.** Your WhatsApp number, KRA PIN and payment details go in at build time (never into the public repo), and "XXX" or "[...]" left in any of them means no final build.
+- **The client README has no typed commands** (a test fails if `pip`, `python`, `.py`, "Command Prompt" and similar appear in it). It has numbered setup steps and answers the 5 handover questions.
+- **The delivered zip runs on its own** when unzipped somewhere new (tested).
+
+| Day 4 file | What it is |
+|---|---|
+| `client/README.md` | The client's guide |
+| `build_delivery.py` | Builds the package, the invoice PDF and the zip |
+| `DELIVERY_MESSAGE.md` | The delivery email and a short WhatsApp version |
+| `WALKTHROUGH_SCRIPT.md` | Under-3-minute video script, timed |
+| `HANDOVER_QA.md` | The 5 handover questions and answers |
+| `DELIVERY_CHECKLIST.md` | 11 checks before sending |
+| `tests/test_delivery.py` | 11 tests for the package |
 
 ## Run it (developer)
 
 ```bash
 pip install -r requirements.txt
-pytest -q                                   # 65 tests, no API key or email needed
+pytest -q                                   # 78 tests, no API key or email needed
 cp config.env.example config.env            # add ANTHROPIC_API_KEY, Gmail App Password, REPORT_TO
 python sync.py --check                      # settings check
 python sync.py --no-email                   # makes reports/: price_updates, to_check, changes, email preview
@@ -52,7 +92,7 @@ The top item: **5000L tank, cost 41,500 to 43,900, sells at 51,880, suggested 54
 | `deliver.py` | The two spreadsheets and the email (HTML + plain text) |
 | `config.env.example` | Every setting, with plain notes on each line |
 | `setup.bat`, `run.bat`, `send test email.bat`, `remove_schedule.bat` | Double-click files |
-| `READ ME FIRST.txt` | Client guide |
+| `client/README.md` | Client guide (shipped as README.md in the package) |
 | `TEST_PATHS.md` | Every user path and its result |
 | `OBSERVER_NOTES.md` | Template for watching someone use it without help |
 | `BACKLOG.md` | What I'd fix with one more day |

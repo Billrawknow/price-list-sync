@@ -101,9 +101,48 @@ PASS: meets the brief (>= 98% correct, no wrong price used)
 2. **Wrong suggestions** ("fascia board" for a dropped marine board; the wrong tier for the HWR-11O typo).
 3. **The email said "1,890 → 1,890"** for items that were already too cheap, and showed dates as 2026-11-23.
 
+**First real email (Gmail, 26 Nov):** arrived with both spreadsheets. Reading them as the client would turned up four fixes:
+1. **Cost-down rows suggested *cutting* the price.** Thinner showed "Suggested 1,480" against selling 1,570, and a clerk copying that column would lower prices nobody asked to lower. Now these rows keep the current price, with a note: "Keep 1,570, or lower to 1,480 and still make 25%".
+2. **Percentages showed "4" next to "3.9".** They're now true percentages with one decimal (4.0%).
+3. **The to_check "Supplier item" column cut text off.** It's now wider, with wrapped text.
+4. **Suggestions started in lower case, with ISO dates.** They now say exactly what to change: "Did you mean HWR-110 …? If so, change Supplier Item to HWR-110."
+
+Tests: 65.
+
 **What doesn't work yet or isn't proven**
-- **The real Gmail send hasn't been tried yet.** Needs the user's App Password: run `send test email.bat`.
 - **The observer session isn't done yet.** It needs a real person (OBSERVER_NOTES.md).
 - **The walkthrough video isn't recorded yet** (WALKTHROUGH_SCRIPT.md).
 
 **Tomorrow (Day 4/5):** observer session, top 3 fixes, video, delivery checklist, invoice.
+
+---
+
+## Day 4: Documentation and delivery (Friday 27 November 2026)
+
+**Built**
+- **`client/README.md`:** the client's guide.
+  - What you need, and 4 numbered setup steps, including exactly how to get a Gmail App Password.
+  - The weekly routine, and what each part of the email means.
+  - "If it stops": open `logs\sync.log`, read the last line, then `run.bat`, then WhatsApp.
+  - The 5 handover questions, answered in plain words.
+  - Double-clicks only, no typed commands.
+- **`build_delivery.py`:** builds `delivery/` with:
+  - the client folder (app, settings template, their lists and price sheet, empty logs/ and reports/);
+  - `invoice.pdf` (KES 25,000, less the 12,500 deposit, **12,500 due**);
+  - the walkthrough video, once recorded;
+  - one zip of the lot.
+  Your phone number, KRA PIN and payment details are filled in at build time, so they're never in the public repo.
+- **`DELIVERY_MESSAGE.md`** (email plus a WhatsApp version), **`WALKTHROUGH_SCRIPT.md`** (cut to under 3 minutes, timed), updated **`HANDOVER_QA.md`** and **`DELIVERY_CHECKLIST.md`**.
+- `READ ME FIRST.txt` is retired. One client guide, so the two can't drift apart.
+
+**Tested by using the package as the client would** (unzipped somewhere new, run on its own). That found 3 bugs:
+1. **"Check ANTHROPIC_API_KEY in .env"**, but the client's file is `config.env`. Two messages from Day 2 were sending her to a file that doesn't exist. Fixed, and a test scans all code for this.
+2. **A supplier with no list put 40 near-identical rows in to_check.** Now it's one line in the email: "Kapsoit Plumbing: NO PRICE LIST in the folder, so its 15 item(s) weren't checked this week."
+3. **The final build accepted template text** like "XXXXXX" and "[bank, branch, account]" as real payment details. It would have printed them on a real invoice. Now they count as missing, and the build stops.
+
+**Tests:** 78 (28 core, 39 week paths, 11 delivery). Breaking the secrets guard makes the secrets test fail.
+
+**Still to do (needs a person or your details)**
+- Record the walkthrough (docs/walkthrough.mp4), then rebuild.
+- Build the final package with your WhatsApp number, KRA PIN and payment details.
+- The observer session (Day 3 carry-over).

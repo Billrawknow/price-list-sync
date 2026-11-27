@@ -210,7 +210,7 @@ class Claude:
         if self.client is None:
             key = os.getenv("ANTHROPIC_API_KEY", "").strip()
             if not key:
-                raise SyncError("ANTHROPIC_API_KEY is missing. Copy .env.example to .env and add your key.")
+                raise SyncError("ANTHROPIC_API_KEY is missing. Add your key to config.env.")
             self.client = anthropic.Anthropic(api_key=key, timeout=API_TIMEOUT, max_retries=0)
         temporary = tuple(getattr(anthropic, n) for n in ("RateLimitError", "APIConnectionError",
                                                            "InternalServerError", "OverloadedError")
@@ -224,7 +224,7 @@ class Claude:
                     **EXTRA_ARGS)
                 break
             except anthropic.AuthenticationError:
-                raise SyncError("The API key was rejected. Check ANTHROPIC_API_KEY in .env.")
+                raise SyncError("The API key was rejected. Check ANTHROPIC_API_KEY in config.env.")
             except temporary as err:
                 if attempt == MAX_ATTEMPTS:
                     raise SyncError(f"The AI service didn't respond after {MAX_ATTEMPTS} tries ({type(err).__name__}).")

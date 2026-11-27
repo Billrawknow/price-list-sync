@@ -30,6 +30,8 @@ Every row is an automated test in `tests/test_week.py` (65 tests in total, all p
 2. **Bad suggestions for unmatched items.** Marine board suggested "fascia board"; it was actually dropped by the supplier. `HWR-11O` (letter O) suggested the wrong tier. Now dropped items are recognised from last week's list, and code typos (O/0, I/1) are checked first.
 3. **The email showed "1,890 → 1,890"** for items that were already priced too low. It now says "unchanged 1,890". Supplier dates now read "23 Nov 2026", not "2026-11-23".
 
+4. **From the first real email:** cost-down rows suggested cutting prices. They now keep the current price and note the lowest fair price. Percentages show one decimal, and the to_check suggestions say exactly what to change.
+
 ## Checked by breaking it
 
 - Removing the plain-text part of the email makes the email test fail.

@@ -149,9 +149,12 @@ def test_supplier_without_codes_matched_by_printed_description(env):
 
 
 @pytest.mark.parametrize("product, hint", [
-    ("Marine board 18mm", "No longer on the supplier's list (was 6,695 on 16 Nov 2026). Ask the supplier, or find another supplier and update Supplier Item."),
-    ("Barbed wire 25kg", "Did you mean HWR-110 Barbed wire - bulk 10+ (25kg roll) (4,800)? If so, change Supplier Item to HWR-110."),
-    ("Kitchen sink single bowl", 'Did you mean Kitchen sink single bowl (piece) (3,950)? If so, change Supplier Item to "Kitchen sink single bowl".'),
+    ("Marine board 18mm", "No longer on the supplier's list (was 6,695 on 16 Nov 2026). Ask the supplier, or "
+                          "find another supplier and update Supplier Item."),
+    ("Barbed wire 25kg", "Did you mean HWR-110 Barbed wire - bulk 10+ (25kg roll) (4,800)? If so, change "
+                         "Supplier Item to HWR-110."),
+    ("Kitchen sink single bowl", "Did you mean Kitchen sink single bowl (piece) (3,950)? If so, change Supplier "
+                                 "Item to \"Kitchen sink single bowl\"."),
 ])
 def test_not_found_items_get_a_reason_never_a_silent_guess(env, product, hint):
     p, _ = priced(env)
@@ -341,7 +344,6 @@ def test_email_says_unchanged_for_items_that_were_already_too_cheap_and_uses_sho
     assert "Rift Valley Building Supplies: list of 23 Nov 2026: 18 up" in text
 
 
-
 def test_cost_down_rows_never_suggest_cutting_the_price(env):
     # From the first real email (26 Nov): Thinner showed "Suggested 1,480" against selling 1,570.
     run(env)
@@ -349,7 +351,7 @@ def test_cost_down_rows_never_suggest_cutting_the_price(env):
     rows = {r[1]: r for r in load_workbook(env.dir / "reports" / "price_updates_2026-11-30.xlsx")
             .active.iter_rows(min_row=2, values_only=True)}
     thinner = rows["Thinner 5L"]
-    assert thinner[3] == "Cost down" and thinner[10] == thinner[7] == 1570
+    assert thinner[3] == "Cost down" and thinner[10] == thinner[7] == 1570        # keep the price
     assert thinner[12] == "Keep 1,570, or lower to 1,480 and still make 25%"
     assert rows["Door lock 4-lever"][12] == "Was already below target before this week"
 
@@ -361,3 +363,24 @@ def test_percent_columns_always_show_one_decimal(env):
     cement = next(r for r in ws.iter_rows(min_row=2) if r[1].value == "Cement 42.5N 50kg")
     assert cement[6].number_format == "0.0%" and abs(cement[6].value - 0.0397) < 0.001
     assert cement[9].value == 0.12
+
+
+def test_supplier_with_no_list_is_one_clear_note_not_a_flood_of_to_check_rows(env, capsys):
+    # Found testing the delivery package (27 Nov): an empty supplier folder put 40 near-identical rows in to_check.
+    for supplier in ("kapsoit-plumbing", "rift-valley-building-supplies"):
+        shutil.rmtree(env.dir / "price_lists" / supplier)
+    assert run(env) == 0
+    text = FakeSMTP.sent[0][0].get_body(("plain",)).get_content()
+    assert "Kapsoit Plumbing: NO PRICE LIST in the folder, so its 15 item(s) weren't checked this week." in text
+    assert "Rift Valley Building Supplies: NO PRICE LIST in the folder, so its 25 item(s) weren't checked" in text
+    from openpyxl import load_workbook
+    check = list(load_workbook(env.dir / "reports" / "to_check_2026-11-30.xlsx").active.iter_rows(values_only=True))
+    assert len(check) == 1                                     # header only: nothing to fix item by item
+
+
+def test_messages_point_at_config_env_not_dot_env():
+    # Found testing the delivery package: "Check ANTHROPIC_API_KEY in .env", but the client's file is config.env.
+    for name in ("pricesync.py", "sync.py", "shop.py", "deliver.py"):
+        source = (ROOT / name).read_text(encoding="utf-8")
+        assert " in .env" not in source and "to .env" not in source, name
+
