@@ -1,6 +1,6 @@
 # Price List Sync: Week 7 client project
 
-**Status: Day 4 done. Delivery package built and tested: 78 tests. The delivered folder runs on its own.**
+**Status: Week 7 complete.** Scoped, built, tested (78 tests, 317/317 prices correct on real AI output), packaged and delivered. See the retrospective: [RETROSPECTIVE.md](RETROSPECTIVE.md).
 
 Every Monday at 7:00 am, Price List Sync reads a hardware shop's supplier price lists (PDF and Excel). It checks every price against the original document, matches each item to the shop's own price sheet, and emails the owner and managers what to reprice, with the suggested selling price at the shop's markup. A person approves every change.
 
@@ -9,6 +9,7 @@ AI Masterclass 2, Week 7 (Client Project). The client is simulated: Mlimani Hard
 - **Day 2:** the core, verified on real AI output at 317/317 prices correct.
 - **Day 3:** completing and testing.
 - **Day 4:** documentation and the delivery package.
+- **Day 5:** delivery ([DELIVERY.md](DELIVERY.md)), feedback ([FEEDBACK.md](FEEDBACK.md)) and the [retrospective](RETROSPECTIVE.md).
 
 **For the client:** [client/README.md](client/README.md), with numbered steps, double-clicks only, and the 5 handover questions answered.
 
